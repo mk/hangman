@@ -1,6 +1,7 @@
 module Main (..) where
 
 import Signal
+import String
 import NativeUi as Ui
 import NativeUi.NativeApp as NativeApp
 import NativeUi.Style as Style exposing (defaultTransform)
@@ -19,14 +20,14 @@ main =
 type alias Model =
   { solution: String
   , display: String
-  , attempts: List String }
+  , attempts: List Char }
 
 
 model : Model
 model =
   { solution = "waldsterben"
   , display = "___________"
-  , attempts = []
+  , attempts = ['e', 'r']
   }
 
 
@@ -50,4 +51,9 @@ type Action
 
 update : Action -> Model -> Model
 update action model =
-  model
+  let
+    solution = model.solution
+    attempts = model.attempts
+    display = String.map (\char -> if (List.member char attempts) then char else '_' ) solution
+  in
+    { model | display = display }
