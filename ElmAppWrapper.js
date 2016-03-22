@@ -7,6 +7,7 @@ var {
   Text,
   View,
   Image,
+  TextInput
 } = React;
 
 
