@@ -1,0 +1,60 @@
+Elm.Main = Elm.Main || {};
+Elm.Main.make = function (_elm) {
+       "use strict";
+       _elm.Main = _elm.Main || {};
+       if (_elm.Main.values)    return _elm.Main.values;
+       var _U = Elm.Native.Utils.make(_elm),
+       $Basics = Elm.Basics.make(_elm),
+       $Debug = Elm.Debug.make(_elm),
+       $List = Elm.List.make(_elm),
+       $Maybe = Elm.Maybe.make(_elm),
+       $NativeUi = Elm.NativeUi.make(_elm),
+       $NativeUi$NativeApp = Elm.NativeUi.NativeApp.make(_elm),
+       $NativeUi$Style = Elm.NativeUi.Style.make(_elm),
+       $Result = Elm.Result.make(_elm),
+       $Signal = Elm.Signal.make(_elm);
+       var _op = {};
+       var button = F4(function (address,action,color,content) {
+                       return A2($NativeUi.text
+                                ,_U.list([$NativeUi.style(_U.list([$NativeUi$Style.color("white")
+                                                                  ,$NativeUi$Style.textAlign("center")
+                                                                  ,$NativeUi$Style.backgroundColor(color)
+                                                                  ,$NativeUi$Style.paddingTop(5)
+                                                                  ,$NativeUi$Style.paddingBottom(5)
+                                                                  ,$NativeUi$Style.width(30)
+                                                                  ,$NativeUi$Style.fontWeight("bold")
+                                                                  ,$NativeUi$Style.shadowColor("#000")
+                                                                  ,$NativeUi$Style.shadowOpacity(0.25)
+                                                                  ,A2($NativeUi$Style.shadowOffset,1,1)
+                                                                  ,$NativeUi$Style.shadowRadius(5)
+                                                                  ,$NativeUi$Style.transform(_U.update($NativeUi$Style.defaultTransform
+                                                                                                      ,{rotate: $Maybe.Just("10deg")}))]))
+                                         ,A2($NativeUi.onPress,address,action)])
+                                ,_U.list([$NativeUi.string(content)]));
+                    });
+       var update = F2(function (action,model) { var _p0 = action;if (_p0.ctor === "Increment") { return model + 1;} else { return model - 1;}});
+       var Decrement = {ctor: "Decrement"};
+       var Increment = {ctor: "Increment"};
+       var view = F2(function (address,count) {
+                     return A2($NativeUi.view
+                              ,_U.list([$NativeUi.style(_U.list([$NativeUi$Style.alignItems("center")]))])
+                              ,_U.list([A2($NativeUi.image
+                                          ,_U.list([$NativeUi.style(_U.list([$NativeUi$Style.height(64)
+                                                                            ,$NativeUi$Style.width(64)
+                                                                            ,$NativeUi$Style.marginBottom(30)]))
+                                                   ,$NativeUi.imageSource("https://raw.githubusercontent.com/futurice/spiceprogram/master/assets/img/logo/chilicorn_no_text-128.png")])
+                                          ,_U.list([]))
+                                       ,A2($NativeUi.text
+                                          ,_U.list([$NativeUi.style(_U.list([$NativeUi$Style.textAlign("center"),$NativeUi$Style.marginBottom(30)]))])
+                                          ,_U.list([$NativeUi.string(A2($Basics._op["++"],"Counter: ",$Basics.toString(count)))]))
+                                       ,A2($NativeUi.view
+                                          ,_U.list([$NativeUi.style(_U.list([$NativeUi$Style.width(80)
+                                                                            ,$NativeUi$Style.flexDirection("row")
+                                                                            ,$NativeUi$Style.justifyContent("space-between")]))])
+                                          ,_U.list([A4(button,address,Decrement,"#d33","-"),A4(button,address,Increment,"#3d3","+")]))]));
+                  });
+       var model = 9000;
+       var app = $NativeUi$NativeApp.start({model: model,view: view,update: update});
+       var main = app;
+       return _elm.Main.values = {_op: _op,app: app,main: main,model: model,view: view,Increment: Increment,Decrement: Decrement,update: update,button: button};
+    };
