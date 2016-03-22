@@ -36,10 +36,13 @@ view address model =
   Ui.view
     [ Ui.style [ Style.alignItems "center" ]
     ]
-    [ Ui.text
-        [ 
-        ]
-        [ Ui.string model.display
+    [ Ui.textInput
+        [ Ui.value model.display
+        , Ui.style
+            [ Style.height 50
+            , Style.width 200
+            , Style.marginBottom 30
+            ]
         ]
     ]
 
