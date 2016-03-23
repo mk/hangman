@@ -18,16 +18,17 @@ main =
 
 
 type alias Model =
-  { solution: String
-  , display: String
-  , attempts: List Char }
+  { solution : String
+  , display : String
+  , attempts : List Char
+  }
 
 
 model : Model
 model =
   { solution = "waldsterben"
   , display = "___________"
-  , attempts = ['e', 'r']
+  , attempts = [ 'e', 'r' ]
   }
 
 
@@ -44,6 +45,7 @@ view address model =
             , Style.marginBottom 30
             ]
         ]
+        []
     ]
 
 
@@ -55,8 +57,20 @@ type Action
 update : Action -> Model -> Model
 update action model =
   let
-    solution = model.solution
-    attempts = model.attempts
-    display = String.map (\char -> if (List.member char attempts) then char else '_' ) solution
+    solution =
+      model.solution
+
+    attempts =
+      model.attempts
+
+    display =
+      String.map
+        (\char ->
+          if (List.member char attempts) then
+            char
+          else
+            '_'
+        )
+        solution
   in
     { model | display = display }
