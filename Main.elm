@@ -1,5 +1,6 @@
 module Main (..) where
 
+import Debug
 import Signal
 import String
 import NativeUi as Ui
@@ -28,8 +29,23 @@ model : Model
 model =
   { solution = "waldsterben"
   , display = "___________"
-  , attempts = [ 'e', 'r' ]
+  , attempts = []
   }
+
+
+remainingAttempts model =
+  let
+    remaining =
+      10 - List.length (List.filter (\c -> not (List.member c (String.toList model.solution))) model.attempts)
+  in
+    if remaining > 0 then
+      remaining
+    else
+      0
+
+
+
+-- [  ]
 
 
 view : Signal.Address Action -> Model -> Ui.NativeUi
@@ -37,8 +53,29 @@ view address model =
   Ui.view
     [ Ui.style [ Style.alignItems "center" ]
     ]
-    [ Ui.textInput
-        [ Ui.value model.display
+    [ Ui.text
+        [ Ui.style
+            [ Style.fontWeight "bold"
+            , Style.fontSize 30
+            ]
+        ]
+        [ Ui.string ((toString (remainingAttempts model)) ++ " tries left.") ]
+    , Ui.text
+        [ Ui.style
+            [ Style.backgroundColor "#ccc"
+            , Style.letterSpacing 4
+            , Style.borderColor "#000"
+            , Style.borderWidth 1
+            , Style.borderRadius 5
+            , Style.fontWeight "bold"
+            , Style.fontSize 30
+            ]
+        ]
+        [ Ui.string model.display ]
+    , Ui.textInput
+        [ Ui.value ""
+        , Ui.placeholder "tap here to take a guess"
+        , Ui.onChangeText address (\s -> TextChanged s)
         , Ui.style
             [ Style.height 50
             , Style.width 200
@@ -50,27 +87,31 @@ view address model =
 
 
 type Action
-  = Increment
-  | Decrement
+  = TextChanged String
 
 
 update : Action -> Model -> Model
 update action model =
-  let
-    solution =
-      model.solution
+  case action of
+    TextChanged newText ->
+      let
+        d =
+          Debug.log "newText" newText
 
-    attempts =
-      model.attempts
+        solution =
+          model.solution
 
-    display =
-      String.map
-        (\char ->
-          if (List.member char attempts) then
-            char
-          else
-            '_'
-        )
-        solution
-  in
-    { model | display = display }
+        attempts =
+          model.attempts ++ (String.toList (String.toLower newText))
+
+        display =
+          String.map
+            (\char ->
+              if (List.member char attempts) then
+                char
+              else
+                '_'
+            )
+            solution
+      in
+        { model | display = display, attempts = attempts }
