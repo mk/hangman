@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react-native');
 var Elm = require('./elm');
+
 var {
   AppRegistry,
   StyleSheet,

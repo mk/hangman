@@ -6,6 +6,9 @@ import String
 import NativeUi as Ui
 import NativeUi.NativeApp as NativeApp
 import NativeUi.Style as Style exposing (defaultTransform)
+import NativeUi.Elements exposing (..)
+import NativeUi.Properties exposing (..)
+import NativeUi.Handlers exposing (..)
 
 
 app : Signal Ui.NativeUi
@@ -50,17 +53,17 @@ remainingAttempts model =
 
 view : Signal.Address Action -> Model -> Ui.NativeUi
 view address model =
-  Ui.view
+  view
     [ Ui.style [ Style.alignItems "center" ]
     ]
-    [ Ui.text
+    [ text
         [ Ui.style
             [ Style.fontWeight "bold"
             , Style.fontSize 30
             ]
         ]
         [ Ui.string ((toString (remainingAttempts model)) ++ " tries left.") ]
-    , Ui.text
+    , text
         [ Ui.style
             [ Style.backgroundColor "#ccc"
             , Style.letterSpacing 4
@@ -72,10 +75,10 @@ view address model =
             ]
         ]
         [ Ui.string model.display ]
-    , Ui.textInput
-        [ Ui.value ""
-        , Ui.placeholder "tap here to take a guess"
-        , Ui.onChangeText address (\s -> TextChanged s)
+    , textInput
+        [ value ""
+        , placeholder "tap here to take a guess"
+        , onChangeText address (\s -> TextChanged s)
         , Ui.style
             [ Style.height 50
             , Style.width 200
@@ -88,6 +91,7 @@ view address model =
 
 type Action
   = TextChanged String
+  | Noop
 
 
 update : Action -> Model -> Model
@@ -114,4 +118,10 @@ update action model =
             )
             solution
       in
-        { model | display = display, attempts = attempts }
+        { model
+          | display = display
+          , attempts = attempts
+        }
+
+    Noop ->
+      model
