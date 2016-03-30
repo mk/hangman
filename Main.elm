@@ -53,7 +53,7 @@ remainingAttempts model =
 
 view : Signal.Address Action -> Model -> Ui.NativeUi
 view address model =
-  view
+  NativeUi.Elements.view
     [ Ui.style [ Style.alignItems "center" ]
     ]
     [ text
