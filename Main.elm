@@ -2,6 +2,7 @@ module Main (..) where
 
 import Debug
 import Signal
+import Set
 import String
 import NativeUi as Ui
 import NativeUi.NativeApp as NativeApp
@@ -275,7 +276,7 @@ update action model =
       else
         let
           attempts =
-            model.attempts ++ (String.toList (String.toLower newText))
+            Set.toList (Set.fromList (model.attempts ++ (String.toList (String.toLower newText))))
 
           display =
             String.map
