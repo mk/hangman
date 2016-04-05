@@ -104,9 +104,9 @@ stickmanView address incorrAttempts =
   let
     src =
       if incorrAttempts > 0 then
-        "http://localhost:8081/images/" ++ (toString incorrAttempts) ++ ".png"
+        (toString incorrAttempts)
       else
-        "http://localhost:8081/images/new-word.png"
+        "new-word"
   in
     image
       [ source src
@@ -122,7 +122,7 @@ stickmanView address incorrAttempts =
 youWonView : Signal.Address Action -> Ui.NativeUi
 youWonView address =
   image
-    [ source "http://localhost:8081/images/you-won.png"
+    [ source "you-won"
     , Ui.style
         [ Style.width 150
         , Style.height 152
