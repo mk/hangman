@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react-native');
 var Elm = require('./elm');
+
 var {
   AppRegistry,
   StyleSheet,
@@ -14,7 +15,9 @@ var {
 function componentFactory() {
   return React.createClass({
     componentWillMount() {
-      Elm.embedReact(Elm.Main, this);
+      Elm.embedReact(Elm.Main, this, {
+        randomSeed: Math.floor(Math.random() * 0xFFFFFFFF)
+      });
     },
     getInitialState() {
       return {
